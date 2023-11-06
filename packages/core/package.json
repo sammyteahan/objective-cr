@@ -1,0 +1,21 @@
+{
+  "name": "@objective-cr/core",
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "sst bind vitest",
+    "typecheck": "tsc -noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "sst": "^2.34.3",
+    "vitest": "^0.34.6"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sesv2": "^3.441.0",
+    "aws-sdk": "^2.1488.0",
+    "electrodb": "^2.10.5",
+    "ulid": "^2.3.0",
+    "zod": "^3.22.4"
+  }
+}
