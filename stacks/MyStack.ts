@@ -1,5 +1,4 @@
-import { principalIsOwnedResource } from "aws-cdk-lib/aws-iam";
-import { StackContext, Api, EventBus, Table, Auth } from "sst/constructs";
+import { StackContext, Api, EventBus, Table, Auth, StaticSite } from "sst/constructs";
 
 export function API({ stack }: StackContext) {
   const bus = new EventBus(stack, "bus", {
@@ -55,6 +54,15 @@ export function API({ stack }: StackContext) {
 
   bus.subscribe("todo.created", {
     handler: "packages/functions/src/events/todo-created.handler",
+  });
+
+  new StaticSite(stack, "web", {
+    path: "packages/web",
+    buildOutput: "dist",
+    buildCommand: "npm run build",
+    environment: {
+      VITE_APP_API_URL: api.url,
+    },
   });
 
   stack.addOutputs({
