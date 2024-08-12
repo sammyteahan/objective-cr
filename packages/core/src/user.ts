@@ -1,7 +1,8 @@
 import { ulid } from 'ulid'
 import { Entity } from 'electrodb'
 
-import * as Dynamo from '@objective-cr/core/src/dynamo'
+// import * as Dynamo from '@objective-cr/core/src/dynamo'
+import * as Dynamo from './dynamo'
 export * as User from './user'
 
 const User = new Entity({

@@ -1,13 +1,13 @@
 import { StackContext, Api, EventBus, Table, Auth, StaticSite } from "sst/constructs";
 
 export function API({ stack }: StackContext) {
-  const bus = new EventBus(stack, "bus", {
+  const bus = new EventBus(stack, `${stack.stage}-bus`, {
     defaults: {
       retries: 10,
     },
   });
 
-  const table = new Table(stack, "table", {
+  const table = new Table(stack, `${stack.stage}-table`, {
     fields: {
       pk: "string",
       sk: "string",
@@ -26,7 +26,7 @@ export function API({ stack }: StackContext) {
     },
   })
 
-  const api = new Api(stack, "api", {
+  const api = new Api(stack, `${stack.stage}-api`, {
     defaults: {
       function: {
         bind: [bus, table],
@@ -40,7 +40,7 @@ export function API({ stack }: StackContext) {
     },
   });
 
-  const auth = new Auth(stack, "auth", {
+  const auth = new Auth(stack, `${stack.stage}-auth`, {
     authenticator: {
       handler: 'packages/functions/src/auth.handler',
       permissions: ['ses:SendEmail']
@@ -56,7 +56,7 @@ export function API({ stack }: StackContext) {
     handler: "packages/functions/src/events/todo-created.handler",
   });
 
-  new StaticSite(stack, "web", {
+  new StaticSite(stack, `${stack.stage}-web`, {
     path: "packages/web",
     buildOutput: "dist",
     buildCommand: "npm run build",
